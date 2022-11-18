@@ -10,7 +10,10 @@ def create_database():
     """
     
     # connect to default database
-    conn = psycopg2.connect("host=127.0.0.1 dbname=postgres user=postgres password=password")
+    try: # graders would need to use these credentials
+        conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
+    except psycopg2.OperationalError: #jay's personal local postgres db
+        conn = psycopg2.connect("host=127.0.0.1 dbname=postgres user=postgres password=password")
     conn.set_session(autocommit=True)
     cur = conn.cursor()
     
