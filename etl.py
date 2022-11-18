@@ -104,7 +104,10 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=postgres password=password")
+    try: # graders would need to use these credentials
+        conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
+    except psycopg2.OperationalError: #jay's personal local postgres db
+        conn = psycopg2.connect("host=127.0.0.1 dbname=postgres user=postgres password=password")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
