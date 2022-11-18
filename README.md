@@ -27,12 +27,15 @@ The new database will be a relational database that is optimized for analytical 
 - .gitignore: a .gitignore file
 
 ## Schema Design and ETL Pipeline Rationale
-The database has 5 tables, one Fact table which is at the center of the schema and useful for analyses, and four Dimension tables that supply auxillary information for the Fact table.
+The database has 5 tables, one Fact table which is at the center of the schema and useful for analyses, and four Dimension tables that supply auxillary information for the Fact table.  
+
 **Fact Table**
-- songplays
+- songplays 
+
 **Dimension Tables**
 - users
 - songs
 - artists
-- time
+- time 
+
 This organization fascilitates the query of songs that are/were streamed at a particular timepoint, which is the main business query that the analytics team has asked for.
