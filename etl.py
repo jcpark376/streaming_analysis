@@ -6,6 +6,11 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    '''
+    Processes all files in a filepath folder and inserts records to these tables:
+    -songs
+    -artists
+    '''
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +24,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    Processes all files in a single filepath folder and inserts records to these tables:
+    -time
+    -users
+    -songplays
+    '''
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -85,6 +96,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    Gets all relevant files from filepath, and processes them according to passed-in function
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -104,6 +118,9 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    '''
+    Connects to postgres, processes all files in song_data and log_data to create a complete postgres database with tables
+    '''
     try: # graders would need to use these credentials
         conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
     except psycopg2.OperationalError: #jay's personal local postgres db
