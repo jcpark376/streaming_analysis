@@ -91,7 +91,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (row['ts'], row['userId'], row['level'], songid, artistid, row['sessionId'], row['location'], row['userAgent'])
+        songplay_data = (pd.to_datetime(row['ts'], unit='ms'), row['userId'], row['level'], songid, artistid, row['sessionId'], row['location'], row['userAgent'])
         cur.execute(songplay_table_insert, songplay_data)
 
 
@@ -121,10 +121,7 @@ def main():
     '''
     Connects to postgres, processes all files in song_data and log_data to create a complete postgres database with tables
     '''
-    try: # graders would need to use these credentials
-        conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
-    except psycopg2.OperationalError: #jay's personal local postgres db
-        conn = psycopg2.connect("host=127.0.0.1 dbname=postgres user=postgres password=password")
+    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=postgres password=password")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
